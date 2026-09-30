@@ -1,0 +1,22 @@
+# Tasks — ISF Landing Page
+
+- [x] T1: Scaffold `index.html` (head, fonts, navbar, 9 section kosong, footer)
+  - Acceptance: semua section punya id + aria-labelledby, link nav mengarah ke id yang benar
+  - Verify: buka di browser, klik semua link nav
+  - Files: index.html, assets/favicon.svg
+- [x] T2: `css/style.css` tokens + reset + layout dasar + navbar + hero
+  - Acceptance: palet navy/krem/kuning sesuai SPEC, hero tampil dengan foto Unsplash
+  - Verify: screenshot 1280px & 375px
+  - Files: css/style.css
+- [x] T3: Section tentang, 3 value point, quote
+  - Verify: visual check
+  - Files: index.html, css/style.css
+- [x] T4: Timeline, cara apply, info + FAQ, CTA penutup, footer
+  - Verify: visual check
+  - Files: index.html, css/style.css
+- [x] T5: `js/main.js` nav toggle, accordion, smooth scroll, scroll reveal (reduced-motion aware)
+  - Acceptance: keyboard-accessible, tanpa error console
+  - Verify: browser console kosong, Tab/Enter berfungsi
+  - Files: js/main.js
+- [x] T6: Responsive QA 375/768/1280, tanpa horizontal scroll
+  - Verify: screenshot tiap breakpoint
