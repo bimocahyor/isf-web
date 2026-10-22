@@ -1,0 +1,12 @@
+{% extends "layouts/error.njk" %}
+{% block title %}404 — Halaman Tidak Ditemukan | ISF{% endblock %}
+{% block content %}
+  <p class="error-code">Kesalahan 404</p>
+  <h1 class="error-title">Halaman tidak ditemukan.</h1>
+  <p class="error-message">
+    Halaman yang kamu cari tidak ada, telah dipindahkan, atau URL-nya salah.
+  </p>
+  <div class="error-actions">
+    <a class="btn btn--primary" href="/">Kembali ke beranda</a>
+  </div>
+{% endblock %}

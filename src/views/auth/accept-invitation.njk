@@ -1,0 +1,132 @@
+{% extends "layouts/base.njk" %}
+
+{% block title %}Accept Invitation — ISF{% endblock %}
+
+{% block body %}
+<main id="main-content" class="auth-page">
+  <div class="auth-card">
+    <div class="auth-logo">
+      <a href="/" aria-label="ISF Home">
+        <img src="/assets/logo.svg" alt="Intelegensia Scholarship Foundation" width="120" height="auto" onerror="this.style.display='none'">
+        <span class="auth-logo-text">ISF</span>
+      </a>
+    </div>
+
+    {% if state === 'accepted' %}
+      <div class="auth-header">
+        <h1 class="auth-title">Account Created</h1>
+        <p class="auth-subtitle">Your account has been set up successfully.</p>
+      </div>
+      <div class="alert alert--success" role="status">
+        <strong>Welcome!</strong> Your <strong>{{ role }}</strong> account for
+        <strong>{{ email }}</strong> is ready.
+      </div>
+      <div class="auth-actions">
+        <a href="/auth/login" class="btn btn--primary btn--full">Sign in to your account</a>
+      </div>
+
+    {% elif state === 'invalid' %}
+      <div class="auth-header">
+        <h1 class="auth-title">Invalid Invitation</h1>
+      </div>
+      <div class="alert alert--error" role="alert">{{ message }}</div>
+      <div class="auth-actions">
+        <p class="auth-hint">If you need access, ask the platform owner to send a new invitation.</p>
+        <a href="/" class="btn btn--ghost btn--full">Return to home</a>
+      </div>
+
+    {% else %}
+      {# state === 'valid' — show the account setup form #}
+      <div class="auth-header">
+        <h1 class="auth-title">Set Up Your Account</h1>
+        <p class="auth-subtitle">
+          You have been invited to join ISF as <strong>{{ role }}</strong>.
+          Complete this form to activate your account.
+        </p>
+      </div>
+
+      {% if isError and message %}
+        <div class="alert alert--error" role="alert">{{ message }}</div>
+      {% endif %}
+
+      <form method="POST" action="/auth/accept-invitation" novalidate>
+        <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+        <input type="hidden" name="token" value="{{ token }}">
+        {# echo back so error re-render knows the email #}
+        <input type="hidden" name="role" value="{{ role }}">
+
+        <div class="form-field">
+          <label class="form-label" for="email">Email address</label>
+          <input
+            class="form-input"
+            id="email"
+            type="email"
+            value="{{ email }}"
+            readonly
+            aria-readonly="true"
+            tabindex="-1"
+          >
+        </div>
+
+        <div class="form-field">
+          <label class="form-label" for="displayName">
+            Full name <span class="form-hint">(optional)</span>
+          </label>
+          <input
+            class="form-input"
+            id="displayName"
+            name="displayName"
+            type="text"
+            autocomplete="name"
+            maxlength="100"
+            value="{{ displayName or '' }}"
+            placeholder="Your display name"
+          >
+        </div>
+
+        <div class="form-field">
+          <label class="form-label" for="password">
+            Password <span class="form-hint">(min. 8 characters)</span>
+          </label>
+          <input
+            class="form-input"
+            id="password"
+            name="password"
+            type="password"
+            autocomplete="new-password"
+            minlength="8"
+            maxlength="128"
+            required
+            aria-required="true"
+          >
+        </div>
+
+        <div class="form-field">
+          <label class="form-label" for="confirmPassword">Confirm password</label>
+          <input
+            class="form-input"
+            id="confirmPassword"
+            name="confirmPassword"
+            type="password"
+            autocomplete="new-password"
+            minlength="8"
+            maxlength="128"
+            required
+            aria-required="true"
+          >
+        </div>
+
+        <div class="auth-actions">
+          <button type="submit" class="btn btn--primary btn--full">
+            Activate account
+          </button>
+        </div>
+      </form>
+    {% endif %}
+
+    <footer class="auth-footer">
+      <p>&copy; {{ year }} Intelegensia Scholarship Foundation</p>
+    </footer>
+  </div>
+</main>
+{% endblock %}

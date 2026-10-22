@@ -1,0 +1,143 @@
+{% extends "layouts/base.njk" %}
+
+{% block title %}Invitations — ISF Owner{% endblock %}
+
+{% block body %}
+<div class="portal-page">
+  <header class="portal-header">
+    <a class="brand" href="/" aria-label="Intelligentsia Scholarship Fund home">
+      <span class="brand__mark" aria-hidden="true">I</span>
+      <span>
+        <span class="brand__name">ISF</span>
+        <span class="brand__sub">Intelegensia</span>
+      </span>
+    </a>
+
+    <div class="portal-header__actions">
+      <div class="portal-user">
+        <span class="portal-user__name">{{ displayName or userEmail }}</span>
+        <span class="portal-user__role" style="background:rgba(242,193,78,0.2);color:#F2C14E;border-color:rgba(242,193,78,0.5);">OWNER</span>
+      </div>
+      <form class="logout-form" method="POST" action="/auth/logout">
+        <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+        <button class="btn btn--ghost btn--sm" type="submit">Sign out</button>
+      </form>
+    </div>
+  </header>
+
+  <nav class="portal-nav" aria-label="Owner navigation">
+    <ul class="portal-nav__list">
+      <li><a href="/owner">Owner Dashboard</a></li>
+      <li><a href="/owner/users">User Management</a></li>
+      <li><a href="/owner/invitations" class="is-active" aria-current="page">Invitations</a></li>
+      <li><a href="/admin">Admin</a></li>
+    </ul>
+  </nav>
+
+  <main class="portal-main" id="main-content">
+    <h1 class="portal-main__heading">Invitations</h1>
+    <p class="portal-main__lead">Send and manage user invitations.</p>
+
+    {% if error %}
+      <div class="alert alert--error" role="alert">{{ error }}</div>
+    {% endif %}
+    {% if success === 'invited' %}
+      <div class="alert alert--success" role="status">Invitation sent successfully.</div>
+    {% elif success === 'revoked' %}
+      <div class="alert alert--success" role="status">Invitation revoked.</div>
+    {% endif %}
+
+    {# ── Send invitation form ─────────────────────────────────────────────── #}
+    <section class="owner-section" aria-labelledby="invite-heading">
+      <h2 class="owner-section__title" id="invite-heading">Send an invitation</h2>
+      <form class="invite-form" method="POST" action="/owner/invite" novalidate>
+        <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+        <div class="form-row">
+          <div class="form-field form-field--grow">
+            <label class="form-label" for="inv-email">Email address</label>
+            <input
+              class="form-input"
+              id="inv-email"
+              name="email"
+              type="email"
+              maxlength="254"
+              required
+              aria-required="true"
+              placeholder="invitee@example.com"
+              autocomplete="off"
+            >
+          </div>
+
+          <div class="form-field">
+            <label class="form-label" for="inv-role">Role</label>
+            <select class="form-input form-select" id="inv-role" name="role" required aria-required="true">
+              {% for r in roles %}
+                <option value="{{ r }}">{{ r }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="form-field form-field--action">
+            <label class="form-label" aria-hidden="true">&nbsp;</label>
+            <button type="submit" class="btn btn--primary">Send invitation</button>
+          </div>
+        </div>
+      </form>
+    </section>
+
+    {# ── Pending invitations list ──────────────────────────────────────────── #}
+    <section class="owner-section" aria-labelledby="pending-heading">
+      <h2 class="owner-section__title" id="pending-heading">
+        Pending invitations
+        {% if invitations.length %}
+          <span class="badge">{{ invitations.length }}</span>
+        {% endif %}
+      </h2>
+
+      {% if invitations.length === 0 %}
+        <p class="empty-state">No pending invitations.</p>
+      {% else %}
+        <div class="table-wrapper" role="region" aria-label="Pending invitations">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th scope="col">Email</th>
+                <th scope="col">Role</th>
+                <th scope="col">Invited by</th>
+                <th scope="col">Expires</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for inv in invitations %}
+                <tr>
+                  <td>{{ inv.email }}</td>
+                  <td><span class="role-badge role-badge--{{ inv.role | lower }}">{{ inv.role }}</span></td>
+                  <td>{{ inv.invitedByEmail or '—' }}</td>
+                  <td>
+                    <time datetime="{{ inv.expiresAt.toISOString() }}">
+                      {{ inv.expiresAt.toLocaleDateString() }}
+                    </time>
+                  </td>
+                  <td>
+                    <form method="POST" action="/owner/invitations/{{ inv.id }}/revoke"
+                          onsubmit="return confirm('Revoke invitation for {{ inv.email }}?')">
+                      <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+                      <button type="submit" class="btn btn--danger btn--sm">Revoke</button>
+                    </form>
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% endif %}
+    </section>
+  </main>
+
+  <footer class="auth-footer">
+    &copy; {{ year }} Intelligentsia Scholarship Fund. All rights reserved.
+  </footer>
+</div>
+{% endblock %}

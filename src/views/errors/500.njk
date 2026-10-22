@@ -1,0 +1,14 @@
+{% extends "layouts/error.njk" %}
+{% block title %}500 — Kesalahan Server | ISF{% endblock %}
+{% block content %}
+  <p class="error-code">Kesalahan 500</p>
+  <h1 class="error-title">Terjadi kesalahan pada server.</h1>
+  <p class="error-message">
+    Kami sedang mengerjakan perbaikannya. Coba lagi dalam beberapa saat,
+    atau hubungi kami jika masalah berlanjut.
+  </p>
+  <div class="error-actions">
+    <a class="btn btn--primary" href="/">Kembali ke beranda</a>
+    <a class="btn btn--ghost" href="mailto:halo@intelegensia.id">Hubungi kami</a>
+  </div>
+{% endblock %}

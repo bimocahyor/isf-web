@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}ISF — Kesalahan{% endblock %}</title>
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+  <style>
+    :root {
+      --navy-900: #0B1B3A;
+      --navy-800: #12274F;
+      --navy-700: #1C3666;
+      --navy-500: #2F4F8F;
+      --cream-100: #F6F1E7;
+      --cream-400: #C9BDA5;
+      --gold-500: #F2C14E;
+      --gold-600: #D9A62E;
+      --font-display: "Newsreader", Georgia, "Times New Roman", serif;
+      --font-body: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; height: 100%; }
+    body {
+      font-family: var(--font-body);
+      background: var(--navy-900);
+      color: var(--cream-100);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 2rem;
+    }
+    .error-card {
+      max-width: 480px;
+      width: 100%;
+      text-align: center;
+    }
+    .error-mark {
+      display: inline-grid;
+      place-items: center;
+      width: 5rem; height: 5rem;
+      border: 1.5px solid var(--gold-500);
+      border-radius: 50%;
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--cream-100);
+      margin-bottom: 2rem;
+    }
+    .error-code {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold-500);
+      margin-bottom: 0.75rem;
+    }
+    .error-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.6rem, 5vw, 2.4rem);
+      font-weight: 500;
+      line-height: 1.1;
+      margin: 0 0 1rem;
+    }
+    .error-message {
+      color: var(--cream-400);
+      font-size: 1rem;
+      line-height: 1.65;
+      margin: 0 0 2rem;
+    }
+    .error-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 0.85rem 1.75rem;
+      border-radius: 999px;
+      font-weight: 600; font-size: 0.95rem;
+      border: 1.5px solid transparent;
+      text-decoration: none;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .btn--primary { background: var(--gold-500); color: var(--navy-900); border-color: var(--gold-500); }
+    .btn--primary:hover { background: var(--gold-600); border-color: var(--gold-600); }
+    .btn--ghost { background: transparent; color: var(--cream-100); border-color: rgba(246,241,231,0.35); }
+    .btn--ghost:hover { border-color: var(--cream-100); }
+    .req-id { margin-top: 2.5rem; font-size: 0.75rem; color: var(--navy-500); font-family: monospace; }
+  </style>
+</head>
+<body>
+  <div class="error-card">
+    <div class="error-mark" aria-hidden="true">I</div>
+    {% block content %}{% endblock %}
+    {% if requestId %}
+    <p class="req-id">Request ID: {{ requestId }}</p>
+    {% endif %}
+  </div>
+</body>
+</html>

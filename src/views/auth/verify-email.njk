@@ -1,0 +1,75 @@
+{% extends "layouts/base.njk" %}
+
+{% block title %}Verify Email — ISF{% endblock %}
+
+{% block body %}
+<div class="auth-page">
+  <header class="auth-header">
+    <a class="brand" href="/" aria-label="Intelligentsia Scholarship Fund home">
+      <span class="brand__mark" aria-hidden="true">I</span>
+      <span>
+        <span class="brand__name">ISF</span>
+        <span class="brand__sub">Intelegensia</span>
+      </span>
+    </a>
+  </header>
+
+  <main class="auth-main" id="main-content">
+    <div class="auth-card">
+      <p class="auth-card__eyebrow">Email verification</p>
+
+      {% if status == 'success' %}
+      <h1 class="auth-card__title">Email verified</h1>
+      <div class="alert alert--success" role="status">
+        Your email address has been verified successfully. You can now sign in.
+      </div>
+      <div style="margin-top:1rem;">
+        <a class="btn btn--primary btn--full" href="/auth/login">Sign in to your account</a>
+      </div>
+
+      {% elif status == 'already_verified' %}
+      <h1 class="auth-card__title">Already verified</h1>
+      <div class="alert alert--warn" role="status">
+        This email address has already been verified. You can sign in normally.
+      </div>
+      <div class="auth-links">
+        <a href="/auth/login">Sign in</a>
+      </div>
+
+      {% elif status == 'expired' %}
+      <h1 class="auth-card__title">Link expired</h1>
+      <div class="alert alert--error" role="alert">
+        This verification link has expired. Verification links are valid for 24 hours.
+        Please register again or contact support.
+      </div>
+      <div class="auth-links">
+        <a href="/auth/register">Register again</a>
+      </div>
+
+      {% elif status == 'invalid' %}
+      <h1 class="auth-card__title">Invalid link</h1>
+      <div class="alert alert--error" role="alert">
+        This verification link is invalid or has already been used.
+        If you need to verify your email, please register again.
+      </div>
+      <div class="auth-links">
+        <a href="/auth/register">Register again</a>
+      </div>
+
+      {% else %}
+      <h1 class="auth-card__title">No token provided</h1>
+      <div class="alert alert--error" role="alert">
+        A verification token is required. Please use the link from your verification email.
+      </div>
+      <div class="auth-links">
+        <a href="/auth/login">Sign in</a>
+      </div>
+      {% endif %}
+    </div>
+  </main>
+
+  <footer class="auth-footer">
+    &copy; {{ year }} Intelligentsia Scholarship Fund. All rights reserved.
+  </footer>
+</div>
+{% endblock %}

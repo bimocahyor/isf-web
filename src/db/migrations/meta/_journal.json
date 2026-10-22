@@ -1,0 +1,42 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1748000000000,
+      "tag": "0000_initial_baseline",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1748100000000,
+      "tag": "0001_phase1_auth",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1748200000000,
+      "tag": "0002_phase1_1_tokens",
+      "breakpoints": true
+    }
+  ,
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1748300000000,
+      "tag": "0003_phase1c_invitations",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1748400000000,
+      "tag": "0004_add_owner_role",
+      "breakpoints": true
+    }
+  ]
+}

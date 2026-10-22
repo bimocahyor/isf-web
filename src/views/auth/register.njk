@@ -1,0 +1,102 @@
+{% extends "layouts/base.njk" %}
+
+{% block title %}Create Account — ISF{% endblock %}
+
+{% block body %}
+<div class="auth-page">
+  <header class="auth-header">
+    <a class="brand" href="/" aria-label="Intelligentsia Scholarship Fund home">
+      <span class="brand__mark" aria-hidden="true">I</span>
+      <span>
+        <span class="brand__name">ISF</span>
+        <span class="brand__sub">Intelegensia</span>
+      </span>
+    </a>
+    <nav class="auth-header__nav" aria-label="Account options">
+      <span>Already have an account?</span>
+      <a href="/auth/login">Sign in</a>
+    </nav>
+  </header>
+
+  <main class="auth-main" id="main-content">
+    <div class="auth-card">
+      <p class="auth-card__eyebrow">Join ISF</p>
+      <h1 class="auth-card__title">Create your account</h1>
+      <p class="auth-card__subtitle">Register to apply for scholarship opportunities.</p>
+
+      {% if error %}
+      <div class="alert alert--error" role="alert">{{ error }}</div>
+      {% endif %}
+
+      <form method="POST" action="/auth/register" novalidate>
+        <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+        <div class="form-group">
+          <label class="form-label form-label--required" for="email">Email address</label>
+          <input
+            class="form-input{% if fieldErrors.email %} form-input--error{% endif %}"
+            type="email"
+            id="email"
+            name="email"
+            value="{{ formValues.email | default('') }}"
+            autocomplete="email"
+            autocapitalize="none"
+            spellcheck="false"
+            required
+            aria-describedby="{% if fieldErrors.email %}email-error{% endif %}"
+          >
+          {% if fieldErrors.email %}
+          <p class="form-error" id="email-error" role="alert">{{ fieldErrors.email }}</p>
+          {% endif %}
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="displayName">Display name <span class="form-hint" style="display:inline">(optional)</span></label>
+          <input
+            class="form-input{% if fieldErrors.displayName %} form-input--error{% endif %}"
+            type="text"
+            id="displayName"
+            name="displayName"
+            value="{{ formValues.displayName | default('') }}"
+            autocomplete="name"
+            maxlength="100"
+            aria-describedby="{% if fieldErrors.displayName %}displayName-error{% endif %}"
+          >
+          {% if fieldErrors.displayName %}
+          <p class="form-error" id="displayName-error" role="alert">{{ fieldErrors.displayName }}</p>
+          {% endif %}
+        </div>
+
+        <div class="form-group">
+          <label class="form-label form-label--required" for="password">Password</label>
+          <input
+            class="form-input{% if fieldErrors.password %} form-input--error{% endif %}"
+            type="password"
+            id="password"
+            name="password"
+            autocomplete="new-password"
+            minlength="8"
+            maxlength="72"
+            required
+            aria-describedby="password-hint{% if fieldErrors.password %} password-error{% endif %}"
+          >
+          <p class="form-hint" id="password-hint">At least 8 characters.</p>
+          {% if fieldErrors.password %}
+          <p class="form-error" id="password-error" role="alert">{{ fieldErrors.password }}</p>
+          {% endif %}
+        </div>
+
+        <button class="btn btn--primary btn--full" type="submit">Create account</button>
+      </form>
+
+      <div class="auth-links">
+        Already registered? <a href="/auth/login">Sign in</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="auth-footer">
+    &copy; {{ year }} Intelligentsia Scholarship Fund. All rights reserved.
+  </footer>
+</div>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends "layouts/base.njk" %}
+
+{% block title %}Registration Pending — ISF{% endblock %}
+
+{% block body %}
+<div class="auth-page">
+  <header class="auth-header">
+    <a class="brand" href="/" aria-label="Intelligentsia Scholarship Fund home">
+      <span class="brand__mark" aria-hidden="true">I</span>
+      <span>
+        <span class="brand__name">ISF</span>
+        <span class="brand__sub">Intelegensia</span>
+      </span>
+    </a>
+  </header>
+
+  <main class="auth-main" id="main-content">
+    <div class="auth-card">
+      <p class="auth-card__eyebrow">Almost there</p>
+      <h1 class="auth-card__title">Verify your email</h1>
+      <div class="alert alert--success" role="status">
+        Account created successfully. A verification link has been sent to your email address.
+        Please check your inbox and click the link to activate your account.
+      </div>
+      <p style="color:var(--cream-400); font-size:0.9rem; margin-bottom:1.5rem;">
+        If you don&rsquo;t see the email within a few minutes, check your spam folder.
+      </p>
+      <div class="auth-links">
+        <a href="/auth/login">Back to sign in</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="auth-footer">
+    &copy; {{ year }} Intelligentsia Scholarship Fund. All rights reserved.
+  </footer>
+</div>
+{% endblock %}

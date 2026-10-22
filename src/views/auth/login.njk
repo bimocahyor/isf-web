@@ -1,0 +1,86 @@
+{% extends "layouts/base.njk" %}
+
+{% block title %}Sign In — ISF{% endblock %}
+
+{% block body %}
+<div class="auth-page">
+  <header class="auth-header">
+    <a class="brand" href="/" aria-label="Intelligentsia Scholarship Fund home">
+      <span class="brand__mark" aria-hidden="true">I</span>
+      <span>
+        <span class="brand__name">ISF</span>
+        <span class="brand__sub">Intelegensia</span>
+      </span>
+    </a>
+    <nav class="auth-header__nav" aria-label="Account options">
+      <span>Don&rsquo;t have an account?</span>
+      <a href="/auth/register">Create account</a>
+    </nav>
+  </header>
+
+  <main class="auth-main" id="main-content">
+    <div class="auth-card">
+      <p class="auth-card__eyebrow">Welcome back</p>
+      <h1 class="auth-card__title">Sign in to your account</h1>
+      <p class="auth-card__subtitle">Enter your credentials to continue.</p>
+
+      {% if error %}
+      <div class="alert alert--error" role="alert">{{ error }}</div>
+      {% endif %}
+
+      {% if info %}
+      <div class="alert alert--warn" role="status">{{ info }}</div>
+      {% endif %}
+
+      <form method="POST" action="/auth/login" novalidate>
+        <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+        <div class="form-group">
+          <label class="form-label form-label--required" for="email">Email address</label>
+          <input
+            class="form-input{% if fieldErrors.email %} form-input--error{% endif %}"
+            type="email"
+            id="email"
+            name="email"
+            value="{{ formValues.email | default('') }}"
+            autocomplete="email"
+            autocapitalize="none"
+            spellcheck="false"
+            required
+            aria-describedby="{% if fieldErrors.email %}email-error{% endif %}"
+          >
+          {% if fieldErrors.email %}
+          <p class="form-error" id="email-error" role="alert">{{ fieldErrors.email }}</p>
+          {% endif %}
+        </div>
+
+        <div class="form-group">
+          <label class="form-label form-label--required" for="password">Password</label>
+          <input
+            class="form-input{% if fieldErrors.password %} form-input--error{% endif %}"
+            type="password"
+            id="password"
+            name="password"
+            autocomplete="current-password"
+            required
+            aria-describedby="{% if fieldErrors.password %}password-error{% endif %}"
+          >
+          {% if fieldErrors.password %}
+          <p class="form-error" id="password-error" role="alert">{{ fieldErrors.password }}</p>
+          {% endif %}
+        </div>
+
+        <button class="btn btn--primary btn--full" type="submit">Sign in</button>
+      </form>
+
+      <div class="auth-links">
+        <a href="/auth/forgot-password">Forgot your password?</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="auth-footer">
+    &copy; {{ year }} Intelligentsia Scholarship Fund. All rights reserved.
+  </footer>
+</div>
+{% endblock %}

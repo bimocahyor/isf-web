@@ -1,0 +1,14 @@
+{% extends "layouts/error.njk" %}
+{% block title %}403 — Access Denied | ISF{% endblock %}
+{% block content %}
+  <p class="error-code">Error 403</p>
+  <h1 class="error-title">Access denied.</h1>
+  <p class="error-message">
+    You don&rsquo;t have permission to access this page.
+    If you believe this is an error, please contact your administrator.
+  </p>
+  <div class="error-actions">
+    <a class="btn btn--primary" href="/portal">Go to portal</a>
+    <a class="btn btn--ghost" href="/">Home</a>
+  </div>
+{% endblock %}

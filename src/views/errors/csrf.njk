@@ -1,0 +1,15 @@
+{% extends "layouts/error.njk" %}
+{% block title %}403 — Security Token Expired | ISF{% endblock %}
+{% block content %}
+  <p class="error-code">Error 403</p>
+  <h1 class="error-title">Session expired.</h1>
+  <p class="error-message">
+    Your security token has expired or is no longer valid.
+    This can happen if you have multiple tabs open or stayed on the page for a long time.
+    Please return to the previous page and try again.
+  </p>
+  <div class="error-actions">
+    <a class="btn btn--primary" href="javascript:history.back()">Go back</a>
+    <a class="btn btn--ghost" href="/auth/login">Sign in</a>
+  </div>
+{% endblock %}
